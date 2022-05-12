@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+require("dotenv").config;
 app.use(cors());
 const formidableMiddleware = require("express-formidable");
 
@@ -14,7 +15,7 @@ app.use(formidableMiddleware());
 app.get("/characters", async (req, res) => {
   try {
     const response = await axios.get(
-      "https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=t7a7NjbAUHREgQNr"
+      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}`
     );
     res.json(response.data); // recuperer les données au front
   } catch (error) {
@@ -25,7 +26,7 @@ app.get("/characters", async (req, res) => {
 app.get("/comics", async (req, res) => {
   try {
     const response = await axios.get(
-      "https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=t7a7NjbAUHREgQNr"
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API_KEY}`
     );
     res.json(response.data);
   } catch (error) {
@@ -37,7 +38,7 @@ app.get("/comics/characterId", async (req, res) => {
   const characterID = req.params.characterid;
   try {
     const response = await axios.get(
-      "https://lereacteur-marvel-api.herokuapp.com/comics?apikey=t7a7NjbAUHREgQNr"
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apikey=${process.env.MARVEL_API_KEY}`
     );
     res.json(response.data);
   } catch (error) {

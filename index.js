@@ -49,7 +49,7 @@ app.get("/comics/:characterId", async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-  res.json(characterID);
+  // res.json(characterID);
   console.log(characterID);
 });
 

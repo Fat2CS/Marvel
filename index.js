@@ -57,7 +57,7 @@ app.get("/character/:characterId", async (req, res) => {
   const characterID = req.params.characterId; //identification Id
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters/${characterID}?apiKey=${process.env.MARVEL_API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/character/${characterID}?apiKey=${process.env.MARVEL_API_KEY}`
     );
     res.json(response.data);
   } catch (error) {

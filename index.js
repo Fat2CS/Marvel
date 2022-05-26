@@ -1,24 +1,30 @@
+require("dotenv").config;
 const express = require("express");
 const cors = require("cors");
-
-const app = express();
-require("dotenv").config;
-app.use(cors());
+const axios = require("axios");
 const formidableMiddleware = require("express-formidable");
 
-// importer axios
-const axios = require("axios");
+const app = express();
+app.use(cors());
+
 app.use(formidableMiddleware());
 
 //TOUTES LES ROUTES qui passent de leur API et en lien avec la nôtre
 
+// app.get("/", (req, res) => {
+//   res.json({ message: "Hello" });
+// });
+
 app.get("/characters", async (req, res) => {
+  console.log("route characters");
   try {
     const { limit, skip, name } = req.query;
     console.log(limit);
+    console.log(skip);
 
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}${limit}${skip}${name}`
+      // `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=t7a7NjbAUHREgQNr&limit=${req.query.limit}&skip=${req.query.skip}&name=${req.query.name}`
+      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}&limit=${req.query.limit}&skip=${req.query.skip}&name=${req.query.name}`
     );
 
     res.json(response.data); // recuperer les données au front
@@ -67,6 +73,12 @@ app.get("/character/:characterId", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
   // res.json(response.data);
+});
+
+app.all("*", (req, res) => {
+  console.log("all");
+
+  res.json("route not find");
 });
 
 app.listen(process.env.PORT, () => {

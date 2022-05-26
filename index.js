@@ -14,8 +14,11 @@ app.use(formidableMiddleware());
 
 app.get("/characters", async (req, res) => {
   try {
+    const { limit, skip, name } = req.query;
+    console.log(limit);
+
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}${limit}${skip}${name}`
     );
 
     res.json(response.data); // recuperer les données au front

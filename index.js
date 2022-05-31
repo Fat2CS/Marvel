@@ -3,11 +3,20 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const formidableMiddleware = require("express-formidable");
+const mongoose = require("mongoose");
 
 const app = express();
 app.use(cors());
 
 app.use(formidableMiddleware());
+
+const loginRoutes = require("./ROUTES/login");
+app.use(loginRoutes);
+
+mongoose.connect("mongodb://localhost/marveluser", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 //TOUTES LES ROUTES qui passent de leur API et en lien avec la nôtre
 
@@ -73,7 +82,7 @@ app.get("/comics/:characterId", async (req, res) => {
   // console.log(response.data);
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics/${characterID}?apikey=${process.env.MARVEL_API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics/${characterID}?apiKey=${process.env.MARVEL_API_KEY}`
     );
     res.json(response.data);
   } catch (error) {

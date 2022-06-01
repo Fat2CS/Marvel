@@ -10,8 +10,6 @@ app.use(cors());
 
 app.use(formidableMiddleware());
 
-const loginRoutes = require("./ROUTES/login");
-
 mongoose.connect(process.env.MONGODB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -22,6 +20,9 @@ mongoose.connect(process.env.MONGODB, {
 // app.get("/", (req, res) => {
 //   res.json({ message: "Hello" });
 // });
+const loginRoutes = require("./ROUTES/login");
+
+app.use(loginRoutes);
 
 app.get("/characters", async (req, res) => {
   // console.log("route characters");

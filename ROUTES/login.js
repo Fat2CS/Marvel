@@ -10,11 +10,11 @@ router.post("/signup", async (req, res) => {
   const { email, username, password } = req.fields;
   try {
     if (req.fields.username === undefined) {
-      res.status(400).json({ message: "Missing parameter" });
+      return res.status(400).json({ message: "Missing parameter" });
     } else {
       const isUserExist = await User.findOne({ email: req.fields.email });
       if (isUserExist !== null) {
-        res.json({ message: "This email already has an account!" });
+        return res.json({ message: "This email already has an account!" });
       } else {
         //   Etape 1 encrypter le mdp
         // generer un token
@@ -35,12 +35,13 @@ router.post("/signup", async (req, res) => {
         // Etape 3 : sauvegarder le nouvel utilisateur dans la bdd
         await newUser.save();
 
-        res.status(200).json(
-          newUser
-          // _id:newUser._id,
-          // email:newUser.email,
-          // token: newUser.token,
-        );
+        return res
+          .status(200)
+          .json({
+            _id: newUser._id,
+            email: newUser.email,
+            token: newUser.token
+          });
       }
     }
     console.log(req.fields);

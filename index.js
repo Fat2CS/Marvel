@@ -13,7 +13,7 @@ app.use(formidableMiddleware());
 const loginRoutes = require("./ROUTES/login");
 app.use(loginRoutes);
 
-mongoose.connect("mongodb://localhost/marveluser", {
+mongoose.connect(process.env.MONGODB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

@@ -11,7 +11,6 @@ app.use(cors());
 app.use(formidableMiddleware());
 
 const loginRoutes = require("./ROUTES/login");
-app.use(loginRoutes);
 
 mongoose.connect(process.env.MONGODB, {
   useNewUrlParser: true,
@@ -44,29 +43,13 @@ app.get("/characters", async (req, res) => {
   }
 });
 
-// app.get("/characters", async (req, res) => {
-//   console.log("route characters");
-//   try {
-//     const response = await axios.get(
-//       // `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=t7a7NjbAUHREgQNr&limit=${req.query.limit}&skip=${req.query.skip}&name=${req.query.name}`
-//       `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.MARVEL_API_KEY}`
-//     );
-//     // console.log(response.data);
-
-//     res.json(response.data); // recuperer les données au front
-//   } catch (error) {
-//     console.log(error.response.data);
-//     res.status(400).json({ message: error.message });
-//   }
-// });
-
 app.get("/comics", async (req, res) => {
   const { limit, skip, title } = req.query;
   console.log(limit);
 
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API_KEY}&limit=${req.query.limit}&skip=${req.query.skip}&title=${title}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API_KEY}&limit=${req.query.limit}&skip=${req.query.skip}&title=`
     );
     res.json(response.data);
   } catch (error) {
